@@ -1,5 +1,6 @@
 package com.cursonelio.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -22,6 +23,7 @@ public class User implements Serializable{
     private String phone;
     private String password;
 
+    @JsonIgnore // Ignora a serialização da lista de pedidos para evitar loops infinitos
     @OneToMany(mappedBy = "client") // Define a relação um-para-muitos com a entidade Order
     private List<Order> orders = new ArrayList<>(); // Associação com a entidade Order
 
