@@ -1,5 +1,6 @@
 package com.cursonelio.course.entities;
 
+import com.cursonelio.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -23,15 +24,18 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") // Formato de data e hora para serialização JSON
     private Instant moment;
 
+    private Integer orderStatus; // Armazena o status do pedido como um inteiro, que será convertido para o enum OrderStatus
+
     @ManyToOne // Define que a relação é muitos-para-um
     @JoinColumn(name = "client_id") // Define a coluna de junção na tabela Order
     private User client; // Associação com a entidade User
 
     public Order(){}
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -51,6 +55,14 @@ public class Order implements Serializable {
         this.moment = moment;
     }
 
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus.getCode();
+    }
+
     public User getClient() {
         return client;
     }
@@ -58,6 +70,7 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
+
 
     @Override
     public boolean equals(Object o) {
