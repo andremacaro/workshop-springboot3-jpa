@@ -20,10 +20,12 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    @ManyToMany // Define a relação muitos-para-muitos com a entidade Category
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id")) // Define a tabela de junção para a relação muitos-para-muitos
     private Set<Category> categories = new HashSet<>(); // Não é um List, mas um Set para evitar duplicatas
 
-    public Product(){}
+    public Product() {
+    }
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;

@@ -1,5 +1,6 @@
 package com.cursonelio.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -17,7 +18,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
+    @JsonIgnore // Ignora a serialização da lista de produtos para evitar loops infinitos
+    @ManyToMany(mappedBy = "categories") // Define a relação muitos-para-muitos com a entidade Product
     private Set<Product> products = new HashSet<>();
 
     public Category(){};
