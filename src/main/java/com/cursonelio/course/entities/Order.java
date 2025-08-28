@@ -8,7 +8,9 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order") // Define o nome da tabela no banco de dados
@@ -29,6 +31,9 @@ public class Order implements Serializable {
     @ManyToOne // Define que a relação é muitos-para-um
     @JoinColumn(name = "client_id") // Define a coluna de junção na tabela Order
     private User client; // Associação com a entidade User
+
+    @OneToMany(mappedBy = "id.order") // id.order refere-se ao atributo order na classe OrderItemPK
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order(){}
 
@@ -71,6 +76,9 @@ public class Order implements Serializable {
         this.client = client;
     }
 
+    public Set<OrderItem> getItems(){
+        return items;
+    }
 
     @Override
     public boolean equals(Object o) {
