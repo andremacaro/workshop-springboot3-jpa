@@ -1,5 +1,6 @@
 package com.cursonelio.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -18,6 +19,7 @@ public class Payment implements Serializable {
     private Long id;
     private Instant moment;
 
+    @JsonIgnore
     @OneToOne //É feito na classe dependente que no caso é essa
     @MapsId
     private Order order;

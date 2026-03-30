@@ -33,9 +33,9 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet", 300.0, "www.imageurl.com/1");
+        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet", 90.5, "www.imageurl.com/1");
         Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus", 1500.0, "www.imageurl.com/2");
-        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor", 2500.0, "www.imageurl.com/3");
+        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor", 1250.0, "www.imageurl.com/3");
         Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 2200.0, "www.imageurl.com/4");
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel", 150.0, "www.imageurl.com/5");
 
@@ -67,7 +67,7 @@ public class TestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(o1, o2, o3)); // Salva os pedidos no banco de dados
 
         OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
-        OrderItem oi2 = new OrderItem(o1, p3, 1, p4.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
         OrderItem oi3 = new OrderItem(o2, p3, 2, p1.getPrice());
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
