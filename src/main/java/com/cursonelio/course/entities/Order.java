@@ -4,6 +4,7 @@ import com.cursonelio.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import com.cursonelio.course.entities.Payment;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -34,6 +35,10 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "id.order") // id.order refere-se ao atributo order na classe OrderItemPK
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Define a relação um-para-um com a entidade Payment, com cascata para operações de persistência
+
+    private Payment payment;
 
     public Order(){}
 
@@ -74,6 +79,14 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Set<OrderItem> getItems(){
