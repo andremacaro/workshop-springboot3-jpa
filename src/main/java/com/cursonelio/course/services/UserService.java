@@ -26,4 +26,8 @@ public class UserService {
         Optional<User> obj = repository.findById(id); // Busca um usuário pelo ID, retornando um Optional
         return obj.get(); // Retorna o usuário encontrado, ou lança uma exceção se não for encontrado
     }
+
+    public User insert(User obj){    //Inserir um usuário
+        return repository.save(obj);
+    }
 }
