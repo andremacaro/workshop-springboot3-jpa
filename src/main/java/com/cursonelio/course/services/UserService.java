@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.cursonelio.course.entities.User;
 import com.cursonelio.course.repositories.UserRepository;
+import com.cursonelio.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = repository.findById(id); // Busca um usuário pelo ID, retornando um Optional
-        return obj.get(); // Retorna o usuário encontrado, ou lança uma exceção se não for encontrado
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id)); // Retorna o usuário encontrado, ou lança uma exceção se não for encontrado
     }
 
     public User insert(User obj){    //Inserir um usuário
