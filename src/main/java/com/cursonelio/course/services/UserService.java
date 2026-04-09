@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import com.cursonelio.course.entities.User;
 import com.cursonelio.course.repositories.UserRepository;
+import com.cursonelio.course.services.exceptions.DatabaseException;
 import com.cursonelio.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service // Anotação que indica que essa classe é um serviço do Spring
@@ -33,7 +36,14 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try{
+            if (!repository.existsById(id)){
+                throw new ResourceNotFoundException(id);
+            }
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User obj){
